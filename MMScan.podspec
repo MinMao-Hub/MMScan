@@ -9,4 +9,5 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/MinMao-Hub/MMScan.git", :tag => "#{s.version}" }
   s.source_files = "MMScanner"
+  s.resources    = "MMScanner/resource.bundle"
 end
