@@ -6,20 +6,6 @@
 //  Copyright © 2017年 keeponrunning. All rights reserved.
 //
 
-/**
- *
- *  1. 是否在扫描完成后关闭扫描控制器【考虑添加一个`BOOL`参数】
- *  2. 多个二维码时，是否将全部都回调回来【回调一个数组回来】
- *  3. 回调参数是否需要添加错误信息【`Error`参数】，亦或是直接弹框显示错误。【也可以是显示并回调】
- *  4. 
- *
- *
- *
- *
- *
- *
- */
-
 #import "ViewController.h"
 #import "MMScanViewController.h"
 #import "TestDrawQrViewController.h"

@@ -179,8 +179,11 @@
     
     //输出扫描字符串
     if (self.scanFinish) {
-        //回调结果到页面上，也可以在此处做跳转操作
-        self.scanFinish(url, nil);
+        //回调结果到页面上，也可以在此处做跳转操作,如果不想回去，直接注释下面的代码
+        if (self.navigationController &&[self.navigationController respondsToSelector:@selector(popViewControllerAnimated:)]) {
+            [self.navigationController popViewControllerAnimated:YES];
+            self.scanFinish(url, nil);
+        }
     }
 }
 
