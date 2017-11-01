@@ -1,0 +1,33 @@
+
+/* Class = "UITextField"; placeholder = "请输入"; ObjectID = "9Tk-fY-bib"; */
+"9Tk-fY-bib.placeholder" = "请输入";
+
+/* Class = "UITextField"; text = "1234567890"; ObjectID = "9Tk-fY-bib"; */
+"9Tk-fY-bib.text" = "1234567890";
+
+/* Class = "UIButton"; normalTitle = "生成"; ObjectID = "MMb-Hc-wnL"; */
+"MMb-Hc-wnL.normalTitle" = "生成";
+
+/* Class = "UIViewController"; title = "生成条形码"; ObjectID = "Nxg-8q-rs1"; */
+"Nxg-8q-rs1.title" = "生成条形码";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "YvT-vN-r1u"; */
+"YvT-vN-r1u.text" = "Title";
+
+/* Class = "UITextField"; placeholder = "请输入"; ObjectID = "eLj-b8-83u"; */
+"eLj-b8-83u.placeholder" = "请输入";
+
+/* Class = "UITextField"; text = "https://www.baidu.com"; ObjectID = "eLj-b8-83u"; */
+"eLj-b8-83u.text" = "https://www.baidu.com";
+
+/* Class = "UIViewController"; title = "生成二维码"; ObjectID = "kVt-Bb-uXZ"; */
+"kVt-Bb-uXZ.title" = "生成二维码";
+
+/* Class = "UILabel"; text = "  "; ObjectID = "p3N-P7-qlZ"; */
+"p3N-P7-qlZ.text" = "  ";
+
+/* Class = "UIButton"; normalTitle = "生成"; ObjectID = "qQp-uk-QYd"; */
+"qQp-uk-QYd.normalTitle" = "生成";
+
+/* Class = "UINavigationItem"; title = "Scanner-Demo"; ObjectID = "rZQ-RD-phR"; */
+"rZQ-RD-phR.title" = "Scanner-Demo";
