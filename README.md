@@ -25,7 +25,7 @@ MMActionSheet is an simple QRCode and barcode scanning tool,Contains a separate 
 
 #### Install with  Cocoapods
 
-* `pod 'MMScan', '~> 1.0'`
+* `pod 'MMScan', '~> 0.0'`
 * `#import <MMScan/MMScanViewController.h> `  in you code
 
 
