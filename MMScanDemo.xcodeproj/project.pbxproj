@@ -9,15 +9,15 @@
 /* Begin PBXBuildFile section */
 		1920CA491F0BA18E0009D988 /* TestDrawQrViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1920CA481F0BA18E0009D988 /* TestDrawQrViewController.m */; };
 		1920CA4C1F0BA19E0009D988 /* TestDrawBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1920CA4B1F0BA19E0009D988 /* TestDrawBarViewController.m */; };
-		1976A07F1F04F19A00084BD2 /* resource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1976A07E1F04F19A00084BD2 /* resource.bundle */; };
-		1976A0821F04FD3700084BD2 /* MMScanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1976A0811F04FD3700084BD2 /* MMScanView.m */; };
+		19B65D831FA9623100A9060F /* MMScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B65D7E1FA9623100A9060F /* MMScanViewController.m */; };
+		19B65D841FA9623100A9060F /* MMScanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B65D7F1FA9623100A9060F /* MMScanView.m */; };
+		19B65D851FA9623100A9060F /* resource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 19B65D821FA9623100A9060F /* resource.bundle */; };
 		19D657C81F03B3C300AD91F6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D657C71F03B3C300AD91F6 /* main.m */; };
 		19D657CB1F03B3C300AD91F6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D657CA1F03B3C300AD91F6 /* AppDelegate.m */; };
 		19D657CE1F03B3C300AD91F6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D657CD1F03B3C300AD91F6 /* ViewController.m */; };
 		19D657D11F03B3C300AD91F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19D657CF1F03B3C300AD91F6 /* Main.storyboard */; };
 		19D657D31F03B3C300AD91F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19D657D21F03B3C300AD91F6 /* Assets.xcassets */; };
 		19D657D61F03B3C300AD91F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19D657D41F03B3C300AD91F6 /* LaunchScreen.storyboard */; };
-		19D657E01F03B57A00AD91F6 /* MMScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19D657DF1F03B57A00AD91F6 /* MMScanViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,9 +25,11 @@
 		1920CA481F0BA18E0009D988 /* TestDrawQrViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestDrawQrViewController.m; sourceTree = "<group>"; };
 		1920CA4A1F0BA19E0009D988 /* TestDrawBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestDrawBarViewController.h; sourceTree = "<group>"; };
 		1920CA4B1F0BA19E0009D988 /* TestDrawBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestDrawBarViewController.m; sourceTree = "<group>"; };
-		1976A07E1F04F19A00084BD2 /* resource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = resource.bundle; sourceTree = "<group>"; };
-		1976A0801F04FD3700084BD2 /* MMScanView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMScanView.h; sourceTree = "<group>"; };
-		1976A0811F04FD3700084BD2 /* MMScanView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMScanView.m; sourceTree = "<group>"; };
+		19B65D7E1FA9623100A9060F /* MMScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMScanViewController.m; sourceTree = "<group>"; };
+		19B65D7F1FA9623100A9060F /* MMScanView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMScanView.m; sourceTree = "<group>"; };
+		19B65D801FA9623100A9060F /* MMScanView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMScanView.h; sourceTree = "<group>"; };
+		19B65D811FA9623100A9060F /* MMScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMScanViewController.h; sourceTree = "<group>"; };
+		19B65D821FA9623100A9060F /* resource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = resource.bundle; sourceTree = "<group>"; };
 		19D657C31F03B3C300AD91F6 /* MMScanDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MMScanDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		19D657C71F03B3C300AD91F6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		19D657C91F03B3C300AD91F6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -38,8 +40,6 @@
 		19D657D21F03B3C300AD91F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		19D657D51F03B3C300AD91F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		19D657D71F03B3C300AD91F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		19D657DE1F03B57A00AD91F6 /* MMScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMScanViewController.h; sourceTree = "<group>"; };
-		19D657DF1F03B57A00AD91F6 /* MMScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMScanViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +53,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		19B65D7D1FA9623100A9060F /* MMScanner */ = {
+			isa = PBXGroup;
+			children = (
+				19B65D801FA9623100A9060F /* MMScanView.h */,
+				19B65D7F1FA9623100A9060F /* MMScanView.m */,
+				19B65D811FA9623100A9060F /* MMScanViewController.h */,
+				19B65D7E1FA9623100A9060F /* MMScanViewController.m */,
+				19B65D821FA9623100A9060F /* resource.bundle */,
+			);
+			path = MMScanner;
+			sourceTree = SOURCE_ROOT;
+		};
 		19D657BA1F03B3C300AD91F6 = {
 			isa = PBXGroup;
 			children = (
@@ -85,7 +97,7 @@
 				19D657D21F03B3C300AD91F6 /* Assets.xcassets */,
 				19D657D41F03B3C300AD91F6 /* LaunchScreen.storyboard */,
 				19D657D71F03B3C300AD91F6 /* Info.plist */,
-				19D657DD1F03B57A00AD91F6 /* MMScanner */,
+				19B65D7D1FA9623100A9060F /* MMScanner */,
 				19D657C61F03B3C300AD91F6 /* Supporting Files */,
 			);
 			path = MMScanDemo;
@@ -97,18 +109,6 @@
 				19D657C71F03B3C300AD91F6 /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		19D657DD1F03B57A00AD91F6 /* MMScanner */ = {
-			isa = PBXGroup;
-			children = (
-				19D657DE1F03B57A00AD91F6 /* MMScanViewController.h */,
-				19D657DF1F03B57A00AD91F6 /* MMScanViewController.m */,
-				1976A0801F04FD3700084BD2 /* MMScanView.h */,
-				1976A0811F04FD3700084BD2 /* MMScanView.m */,
-				1976A07E1F04F19A00084BD2 /* resource.bundle */,
-			);
-			path = MMScanner;
 			sourceTree = "<group>";
 		};
 		FCC585E75C2E4207D7976D9F /* Frameworks */ = {
@@ -180,7 +180,7 @@
 				19D657D61F03B3C300AD91F6 /* LaunchScreen.storyboard in Resources */,
 				19D657D31F03B3C300AD91F6 /* Assets.xcassets in Resources */,
 				19D657D11F03B3C300AD91F6 /* Main.storyboard in Resources */,
-				1976A07F1F04F19A00084BD2 /* resource.bundle in Resources */,
+				19B65D851FA9623100A9060F /* resource.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,9 +195,9 @@
 				1920CA491F0BA18E0009D988 /* TestDrawQrViewController.m in Sources */,
 				19D657CE1F03B3C300AD91F6 /* ViewController.m in Sources */,
 				19D657CB1F03B3C300AD91F6 /* AppDelegate.m in Sources */,
+				19B65D841FA9623100A9060F /* MMScanView.m in Sources */,
 				19D657C81F03B3C300AD91F6 /* main.m in Sources */,
-				1976A0821F04FD3700084BD2 /* MMScanView.m in Sources */,
-				19D657E01F03B57A00AD91F6 /* MMScanViewController.m in Sources */,
+				19B65D831FA9623100A9060F /* MMScanViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
