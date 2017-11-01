@@ -25,6 +25,8 @@ MMActionSheet is an simple QRCode and barcode scanning tool,Contains a separate 
 
 #### Install with  Cocoapods
 
+记得更新你的pod-master,命令`pod repo update master`
+
 * `pod 'MMScan', '~> 0.0'`
 * `#import <MMScan/MMScanViewController.h> `  in you code
 
@@ -74,7 +76,6 @@ MMScanViewController *scanVc = [[MMScanViewController alloc] initWithQrType:MMSc
         NSLog(@"error: %@",error);
     } else {
         NSLog(@"扫描结果：%@",result);
-        [self showInfo:result];
     }
 }];
 [self.navigationController pushViewController:scanVc animated:YES];
