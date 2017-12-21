@@ -11,6 +11,8 @@
 #import <Photos/PHPhotoLibrary.h>
 #import <AVFoundation/AVFoundation.h>
 
+#define kFlash_Y_PAD(__VALUE__) [UIScreen mainScreen].bounds.size.width / 320 * __VALUE__
+
 @interface MMScanViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate, AVCaptureMetadataOutputObjectsDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) MMScanView *scanRectView;
@@ -64,6 +66,7 @@
     
     [self initScanDevide];
     [self drawTitle];
+    [self drawFlashBtn];
     [self drawScanView];
     [self initScanType];
     [self setNavItem:self.scanType];
@@ -100,7 +103,7 @@
     }
 }
 
-- (void)initScanType{
+- (void)initScanType {
     if (self.scanType == MMScanTypeAll) {
         _scanRect = CGRectFromString([self scanRectWithScale:1][0]);
         self.output.rectOfInterest = _scanRect;
@@ -126,7 +129,10 @@
         _tipTitle.text = @"将取景框对准条码,即可自动扫描";
         
         _tipTitle.center = CGPointMake(self.view.center.x, self.view.center.y + CGSizeFromString([self scanRectWithScale:3][1]).height/2 + 25);
+        [_flashBtn setCenter:CGPointMake(self.view.center.x, CGRectGetMaxY(self.view.frame)- kFlash_Y_PAD(120))];
     }
+    [self.view bringSubviewToFront:_tipTitle];
+    [self.view bringSubviewToFront:_flashBtn];
 }
 
 - (NSArray *)scanRectWithScale:(NSInteger)scale {
@@ -220,17 +226,18 @@
         return;
     }
     
-    self.toolsView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.view.frame)-64,
-                                                                   CGRectGetWidth(self.view.frame), 64)];
+    self.toolsView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.view.frame)-64,CGRectGetWidth(self.view.frame), 64)];
+    if ([UIScreen mainScreen].bounds.size.height >= 812) {
+        [self.toolsView setBounds:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 64 + 34)];
+    }
     _toolsView.backgroundColor = [UIColor colorWithRed:0.212 green:0.208 blue:0.231 alpha:1.00];
     
     NSBundle *bundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"resource" ofType: @"bundle"]];
     
-    
     CGSize size = CGSizeMake([UIScreen mainScreen].bounds.size.width/2, 64);
     
     self.scanTypeQrBtn = [[UIButton alloc]init];
-    _scanTypeQrBtn.frame = CGRectMake(0, 0, size.width, size.height);
+    _scanTypeQrBtn.frame = CGRectMake(0, 0, size.width, 64);
     [_scanTypeQrBtn setTitle:@"二维码" forState:UIControlStateNormal];
     [_scanTypeQrBtn setTitleColor:[UIColor colorWithRed:0.165 green:0.663 blue:0.886 alpha:1.00] forState:UIControlStateSelected];
     [_scanTypeQrBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -243,7 +250,7 @@
     [_scanTypeQrBtn addTarget:self action:@selector(qrBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     self.scanTypeBarBtn = [[UIButton alloc]init];
-    _scanTypeBarBtn.frame = CGRectMake(size.width, 0, size.width, size.height);
+    _scanTypeBarBtn.frame = CGRectMake(size.width, 0, size.width, 64);
     [_scanTypeBarBtn setTitle:@"条形码" forState:UIControlStateNormal];
     [_scanTypeBarBtn setTitleColor:[UIColor colorWithRed:0.165 green:0.663 blue:0.886 alpha:1.00] forState:UIControlStateSelected];
     [_scanTypeBarBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -258,6 +265,40 @@
     [_toolsView addSubview:_scanTypeQrBtn];
     [_toolsView addSubview:_scanTypeBarBtn];
     [self.view addSubview:_toolsView];
+}
+
+- (void)drawFlashBtn {
+    if (_flashBtn) {
+        return;
+    }
+    NSBundle *bundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"resource" ofType: @"bundle"]];
+    
+    self.flashBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_flashBtn setBounds:CGRectMake(0, 0, 60, 50)];
+    [_flashBtn setCenter:CGPointMake(self.view.center.x, self.view.center.y + kFlash_Y_PAD(70))];
+    [_flashBtn setImage:[UIImage imageNamed:@"scan_flash_normal" inBundle:bundle compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [_flashBtn setImage:[UIImage imageNamed:@"scan_flash_select" inBundle:bundle compatibleWithTraitCollection:nil] forState:UIControlStateSelected];
+    [_flashBtn setTitle:@"轻触照亮" forState:UIControlStateNormal];
+    [_flashBtn setTitle:@"轻触关闭" forState:UIControlStateSelected];
+    [_flashBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_flashBtn setTitleColor:[UIColor colorWithRed:0.161 green:0.659 blue:0.882 alpha:1.00] forState:UIControlStateSelected];
+    [_flashBtn addTarget:self action:@selector(openFlash:) forControlEvents:UIControlEventTouchDown];
+    _flashBtn.titleLabel.font = [UIFont systemFontOfSize:11];
+    // button标题的偏移量以及图片的偏移量，以便于上下呈现
+    _flashBtn.titleEdgeInsets = UIEdgeInsetsMake(
+        _flashBtn.imageView.frame.size.height+5,
+        -_flashBtn.imageView.bounds.size.width,
+        0,
+        0
+    );
+    _flashBtn.imageEdgeInsets = UIEdgeInsetsMake(
+        0,
+        _flashBtn.titleLabel.frame.size.width/2,
+        _flashBtn.titleLabel.frame.size.height+5,
+        -_flashBtn.titleLabel.frame.size.width/2
+    );
+    
+    [self.view addSubview:_flashBtn];
 }
 
 - (void)setNavItem:(MMScanType)type {
@@ -331,6 +372,7 @@
     
     [UIView animateWithDuration:0.3 animations:^{
         _tipTitle.center = CGPointMake(self.view.center.x, self.view.center.y + scanSize.height/2 + 25);
+        [_flashBtn setCenter:CGPointMake(self.view.center.x, type == MMScanTypeQrCode ? (self.view.center.y + kFlash_Y_PAD(70)) : CGRectGetMaxY(self.view.frame)- kFlash_Y_PAD(120))];
     }];
 }
 

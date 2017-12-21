@@ -1,4 +1,5 @@
 
+
 ## MMScan
 
 
@@ -119,3 +120,20 @@ You are welcome to fork and submit pull requests.
 ### License
 
 MMScan is open-sourced software licensed under the MIT license.
+
+### Update log
+
+
+> *v0.0.4* [2017.12.21]
+
+<hr/>
+
+1. 添加闪光灯小按钮 [#1](https://github.com/MinMao-Hub/MMScan/issues/1)
+
+2. 底部toolBar适配iPhone X【只在模拟器测试过】
+
+
+<hr/>
+
+
+
