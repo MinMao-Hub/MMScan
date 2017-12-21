@@ -374,6 +374,10 @@
         _tipTitle.center = CGPointMake(self.view.center.x, self.view.center.y + scanSize.height/2 + 25);
         [_flashBtn setCenter:CGPointMake(self.view.center.x, type == MMScanTypeQrCode ? (self.view.center.y + kFlash_Y_PAD(70)) : CGRectGetMaxY(self.view.frame)- kFlash_Y_PAD(120))];
     }];
+    
+    if ([_flashBtn isSelected]) {
+        _flashBtn.selected = !_flashBtn.selected;
+    }
 }
 
 //打开相册
