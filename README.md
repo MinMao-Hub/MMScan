@@ -135,5 +135,13 @@ MMScan is open-sourced software licensed under the MIT license.
 
 <hr/>
 
+> *v0.0.5* [2017.12.21]
+
+<hr/>
+
+* 闪光灯小按钮问题处理【扫一扫底部工具栏切换时，闪光灯会关闭，需要重置小按钮的选中状态】
+
+
+<hr/>
 
 
