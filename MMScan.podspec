@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "MMScan"
-  s.version      = "0.0.3"
+  s.version      = "0.0.4"
   s.summary      = "MMScan is a QRCode and barcode scanning tool"
   s.homepage     = "https://github.com/MinMao-Hub"
   s.license      = "MIT"
