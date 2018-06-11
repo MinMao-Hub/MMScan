@@ -161,6 +161,10 @@ MMScan is open-sourced software licensed under the MIT license.
 
 ### Update log
 
+> *v0.0.7* [2018.6.11]
+
+<hr/>
+
 > *v0.0.6* [2018.6.10]
 
 <hr/>
