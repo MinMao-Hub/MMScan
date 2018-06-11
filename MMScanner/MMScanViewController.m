@@ -12,6 +12,7 @@
 #import <AVFoundation/AVFoundation.h>
 
 #define kFlash_Y_PAD(__VALUE__) [UIScreen mainScreen].bounds.size.width / 320 * __VALUE__
+static NSString *kMMScanHistoryKey = @"kMMScanHistoryKey";
 
 @interface MMScanViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate, AVCaptureMetadataOutputObjectsDelegate, UIGestureRecognizerDelegate>
 
@@ -30,6 +31,9 @@
 
 @property (nonatomic, copy) void (^scanFinish)(NSString *, NSError *);
 @property (nonatomic, assign) MMScanType scanType;
+
+@property (nonatomic, strong) NSMutableArray *historyRecords; //修改扫码类型按钮
+
 @end
 
 @implementation MMScanViewController
@@ -37,6 +41,7 @@
     NSString *appName;
     BOOL delayQRAction;
     BOOL delayBarAction;
+    NSBundle *scanBundle;
 }
 
 - (instancetype)initWithQrType:(MMScanType)type onFinish:(void (^)(NSString *result, NSError *error))finish {
@@ -52,7 +57,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"二维码";
+    
+    [self initViewConfiguration];
+    [self initScanDevide];
+    [self drawTitle];
+    [self drawFlashBtn];
+    [self drawScanView];
+    [self initScanType];
+    [self setNavItem:self.scanType];
+    //初始化历史记录数组
+    [self initHistory];
+}
+
+- (void)initViewConfiguration {
+    self.title = @"扫一扫";
     delayQRAction = NO;
     delayBarAction = NO;
     
@@ -63,13 +81,7 @@
         appName = @"该App";
     }
     
-    
-    [self initScanDevide];
-    [self drawTitle];
-    [self drawFlashBtn];
-    [self drawScanView];
-    [self initScanType];
-    [self setNavItem:self.scanType];
+    scanBundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"resource" ofType: @"bundle"]];
 }
 
 - (void)initScanDevide {
@@ -188,6 +200,12 @@
         //回调结果到页面上，也可以在此处做跳转操作,如果不想回去，直接注释下面的代码
         if (self.navigationController &&[self.navigationController respondsToSelector:@selector(popViewControllerAnimated:)]) {
             [self.navigationController popViewControllerAnimated:YES];
+            
+            [_historyRecords insertObject:url atIndex:0];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:_historyRecords forKey:kMMScanHistoryKey];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
             self.scanFinish(url, nil);
         }
     }
@@ -232,8 +250,6 @@
     }
     _toolsView.backgroundColor = [UIColor colorWithRed:0.212 green:0.208 blue:0.231 alpha:1.00];
     
-    NSBundle *bundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"resource" ofType: @"bundle"]];
-    
     CGSize size = CGSizeMake([UIScreen mainScreen].bounds.size.width/2, 64);
     
     self.scanTypeQrBtn = [[UIButton alloc]init];
@@ -241,8 +257,8 @@
     [_scanTypeQrBtn setTitle:@"二维码" forState:UIControlStateNormal];
     [_scanTypeQrBtn setTitleColor:[UIColor colorWithRed:0.165 green:0.663 blue:0.886 alpha:1.00] forState:UIControlStateSelected];
     [_scanTypeQrBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_scanTypeQrBtn setImage:[UIImage imageNamed:@"scan_qr_normal" inBundle:bundle compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-    [_scanTypeQrBtn setImage:[UIImage imageNamed:@"scan_qr_select" inBundle:bundle compatibleWithTraitCollection:nil] forState:UIControlStateSelected];
+    [_scanTypeQrBtn setImage:[UIImage imageNamed:@"scan_qr_normal" inBundle:scanBundle compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [_scanTypeQrBtn setImage:[UIImage imageNamed:@"scan_qr_select" inBundle:scanBundle compatibleWithTraitCollection:nil] forState:UIControlStateSelected];
     [_scanTypeQrBtn setSelected:YES];
     _scanTypeQrBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 15);
     _scanTypeQrBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
@@ -254,8 +270,8 @@
     [_scanTypeBarBtn setTitle:@"条形码" forState:UIControlStateNormal];
     [_scanTypeBarBtn setTitleColor:[UIColor colorWithRed:0.165 green:0.663 blue:0.886 alpha:1.00] forState:UIControlStateSelected];
     [_scanTypeBarBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_scanTypeBarBtn setImage:[UIImage imageNamed:@"scan_bar_normal" inBundle:bundle compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-    [_scanTypeBarBtn setImage:[UIImage imageNamed:@"scan_bar_select" inBundle:bundle compatibleWithTraitCollection:nil] forState:UIControlStateSelected];
+    [_scanTypeBarBtn setImage:[UIImage imageNamed:@"scan_bar_normal" inBundle:scanBundle compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [_scanTypeBarBtn setImage:[UIImage imageNamed:@"scan_bar_select" inBundle:scanBundle compatibleWithTraitCollection:nil] forState:UIControlStateSelected];
     [_scanTypeBarBtn setSelected:NO];
     _scanTypeBarBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 15);
     _scanTypeBarBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
@@ -271,13 +287,12 @@
     if (_flashBtn) {
         return;
     }
-    NSBundle *bundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"resource" ofType: @"bundle"]];
     
     self.flashBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_flashBtn setBounds:CGRectMake(0, 0, 60, 50)];
     [_flashBtn setCenter:CGPointMake(self.view.center.x, self.view.center.y + kFlash_Y_PAD(70))];
-    [_flashBtn setImage:[UIImage imageNamed:@"scan_flash_normal" inBundle:bundle compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
-    [_flashBtn setImage:[UIImage imageNamed:@"scan_flash_select" inBundle:bundle compatibleWithTraitCollection:nil] forState:UIControlStateSelected];
+    [_flashBtn setImage:[UIImage imageNamed:@"scan_flash_normal" inBundle:scanBundle compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
+    [_flashBtn setImage:[UIImage imageNamed:@"scan_flash_select" inBundle:scanBundle compatibleWithTraitCollection:nil] forState:UIControlStateSelected];
     [_flashBtn setTitle:@"轻触照亮" forState:UIControlStateNormal];
     [_flashBtn setTitle:@"轻触关闭" forState:UIControlStateSelected];
     [_flashBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -302,11 +317,37 @@
 }
 
 - (void)setNavItem:(MMScanType)type {
+    
     if(type == MMScanTypeBarCode) {
-        [self.navigationItem setRightBarButtonItem:nil];
+        if (_historyCallBack) {
+            _historyItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"scan_history" inBundle:scanBundle compatibleWithTraitCollection:nil] style:UIBarButtonItemStylePlain target:self action:@selector(callbackHistory)];
+            [self.navigationItem setRightBarButtonItem:_historyItem];
+        }
     } else {
-        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:@"相册" style:UIBarButtonItemStylePlain target:self action:@selector(openPhoto)];
-        [self.navigationItem setRightBarButtonItem:rightItem];
+        if (_historyCallBack) {
+            _photoItem = [[UIBarButtonItem alloc] initWithTitle:@"相册" style:UIBarButtonItemStylePlain target:self action:@selector(openPhoto)];
+            _historyItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"scan_history" inBundle:scanBundle compatibleWithTraitCollection:nil] style:UIBarButtonItemStylePlain target:self action:@selector(callbackHistory)];
+            [self.navigationItem setRightBarButtonItems:@[_photoItem, _historyItem]];
+        } else {
+            _photoItem = [[UIBarButtonItem alloc] initWithTitle:@"相册" style:UIBarButtonItemStylePlain target:self action:@selector(openPhoto)];
+            [self.navigationItem setRightBarButtonItem:_photoItem];
+        }
+    }
+}
+- (void)callbackHistory {
+    if (self.historyCallBack) {
+        self.historyCallBack([self.historyRecords copy]);
+    }
+}
+
+- (void)initHistory {
+    if (!self.historyRecords) {
+        self.historyRecords = [NSMutableArray array];
+    }
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:kMMScanHistoryKey]) {
+        [self.historyRecords addObjectsFromArray:[[NSUserDefaults standardUserDefaults] objectForKey:kMMScanHistoryKey]];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }
 
@@ -387,7 +428,7 @@
         [self openPhotoLibrary];
     else
     {
-        NSString *tipMessage = [NSString stringWithFormat:@"请到手机系统的\n【设置】->【隐私】->【相册】\n对%@开启相机的访问权限",appName];
+        NSString *tipMessage = [NSString stringWithFormat:@"请到手机系统的\n【设置】->【隐私】->【相册】\n对\"%@\"开启相机的访问权限",appName];
         [self showError:tipMessage andTitle:@"相册读取权限未开启"];
     }
 }
@@ -477,7 +518,7 @@
         /// 不允许弹出提示框
         if (authorizationStatus == AVAuthorizationStatusRestricted ||
             authorizationStatus == AVAuthorizationStatusDenied) {
-            NSString *tipMessage = [NSString stringWithFormat:@"请到手机系统的\n【设置】->【隐私】->【相机】\n对%@开启相机的访问权限",appName];
+            NSString *tipMessage = [NSString stringWithFormat:@"请到手机系统的\n【设置】->【隐私】->【相机】\n对\"%@\"开启相机的访问权限",appName];
             [self showError:tipMessage andTitle:@"相机权限未开启"];
             
             return NO;
@@ -501,14 +542,14 @@
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:str preferredStyle:UIAlertControllerStyleAlert];
     
     
-    UIAlertAction *action1 = ({
+    UIAlertAction *action = ({
         UIAlertAction *action = [UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [self.session startRunning];
         }];
         action;
     });
     
-    [alert addAction:action1];
+    [alert addAction:action];
     
     [self presentViewController:alert animated:YES completion:NULL];
 }
@@ -534,6 +575,10 @@
     {
         CIQRCodeFeature *feature = [features objectAtIndex:0];
         NSString *scanResult = feature.messageString;
+        [_historyRecords insertObject:scanResult atIndex:0];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:_historyRecords forKey:kMMScanHistoryKey];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         if (finish) {
             finish(scanResult);
         }
@@ -660,6 +705,21 @@
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         action();
     });
+}
+
+- (void)clearAllRecords {
+    [_historyRecords removeAllObjects];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:_historyRecords forKey:kMMScanHistoryKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)clearRecordIndex: (NSUInteger)index {
+    if (_historyRecords.count <= index) return
+    [_historyRecords removeObjectAtIndex:index];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:_historyRecords forKey:kMMScanHistoryKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

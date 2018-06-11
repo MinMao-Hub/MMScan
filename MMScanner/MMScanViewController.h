@@ -7,15 +7,24 @@
 //
 #import <UIKit/UIKit.h>
 #import "MMScanView.h"
+
+typedef void(^_CallBack)(NSArray *result);
+
 @interface MMScanViewController : UIViewController
 
 @property (nonatomic, strong) UILabel *tipTitle;  //扫码区域下方提示文字
 
 @property (nonatomic, strong) UIView *toolsView;  //底部显示的功能项 -box
 
-@property (nonatomic, strong) UIButton *photoBtn; //相册按钮
+/**
+ 导航条按钮
+ */
+@property (nonatomic, strong) UIBarButtonItem *photoItem;   //相册按钮
+@property (nonatomic, strong) UIBarButtonItem *historyItem; //历史记录按钮 - 【可以自定义- 替换图片等】
 
 @property (nonatomic, strong) UIButton *flashBtn; //闪光灯按钮
+
+@property (nonatomic, copy)_CallBack historyCallBack; //历史记录回调block,设置该值便会记录历史
 
 
 
@@ -28,6 +37,19 @@
  */
 - (instancetype)initWithQrType:(MMScanType)type onFinish:(void (^)(NSString *result, NSError *error))finish;
 
+
+/**
+ 清空所有历史记录
+ */
+- (void)clearAllRecords;
+
+
+/**
+ 清空某一条记录
+
+ @param index 需要删除的index
+ */
+- (void)clearRecordIndex: (NSUInteger)index;
 
 /**
  识别二维码
