@@ -49,6 +49,12 @@ Just clone and add the folder `MMScanner` to your project.
 	<img src="gifs/mmscan.gif" width="35%" style="margin-left:20px" />
 </div>
 
+* 2018.6.10 新增
+
+<div style="margin-top: 10px">
+	<img src="gifs/history.png" width="35%" style="margin-left:20px" />
+</div>
+
 
 
 ### Usage
@@ -111,7 +117,39 @@ UIImage *image = [ScanViewController createBarCodeImageWithString:_linkTfd.text 
 
 ```
 
+#### 保留历史记录以及查看历史记录
 
+```
+//设置历史数据回调
+[scanVc setHistoryCallBack:^(NSArray *result) {
+    NSLog(@"%@",result);
+}];
+```
+
+设置该回调，即显示历史记录按钮【在导航条右边-> 可自定义该item】,点击历史按钮便会回调历史数据。
+
+##### 清除历史数据
+
+```
+/**
+ 清空所有历史记录
+ */
+- (void)clearAllRecords;
+
+
+/**
+ 清空某一条记录
+
+ @param index 需要删除的index
+ */
+- (void)clearRecordIndex: (NSUInteger)index;
+```
+
+
+
+### 更多
+
+更多自定义以及修改原有属性，[请看源码](https://github.com/MinMao-Hub/MMScan/tree/master/MMScanner)
 
 ### Contribution
 
@@ -123,23 +161,28 @@ MMScan is open-sourced software licensed under the MIT license.
 
 ### Update log
 
-
-> *v0.0.4* [2017.12.21]
-
-<hr/>
-
-1. 添加闪光灯小按钮 [#1](https://github.com/MinMao-Hub/MMScan/issues/1)
-
-2. 底部toolBar适配iPhone X【只在模拟器测试过】
-
+> *v0.0.6* [2018.6.10]
 
 <hr/>
+
+* 新增历史记录查看功能
+* 新增导航条小按钮自定义功能
+
+
 
 > *v0.0.5* [2017.12.21]
 
 <hr/>
 
 * 闪光灯小按钮问题处理【扫一扫底部工具栏切换时，闪光灯会关闭，需要重置小按钮的选中状态】
+
+> *v0.0.4* [2017.12.21]
+
+<hr/>
+
+1. 添加闪光灯小按钮 [#Issues-1](https://github.com/MinMao-Hub/MMScan/issues/1)
+
+2. 底部toolBar适配iPhone X【只在模拟器测试过】
 
 
 <hr/>
