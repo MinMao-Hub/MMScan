@@ -165,22 +165,18 @@ MMScan is open-sourced software licensed under the MIT license.
 
 > *v0.0.6* [2018.6.10]
 
-<hr/>
-
 * 新增历史记录查看功能
 * 新增导航条小按钮自定义功能
 
-
+<hr/>
 
 > *v0.0.5* [2017.12.21]
 
-<hr/>
-
 * 闪光灯小按钮问题处理【扫一扫底部工具栏切换时，闪光灯会关闭，需要重置小按钮的选中状态】
 
-> *v0.0.4* [2017.12.21]
-
 <hr/>
+
+> *v0.0.4* [2017.12.21]
 
 1. 添加闪光灯小按钮 [#Issues-1](https://github.com/MinMao-Hub/MMScan/issues/1)
 
