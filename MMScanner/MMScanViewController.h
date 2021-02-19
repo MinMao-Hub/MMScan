@@ -20,12 +20,8 @@ typedef void(^_CallBack)(NSArray *result);
  导航条按钮
  */
 @property (nonatomic, strong) UIBarButtonItem *photoItem;   //相册按钮
-@property (nonatomic, strong) UIBarButtonItem *historyItem; //历史记录按钮 - 【可以自定义- 替换图片等】
 
 @property (nonatomic, strong) UIButton *flashBtn; //闪光灯按钮
-
-@property (nonatomic, copy)_CallBack historyCallBack; //历史记录回调block,设置该值便会记录历史
-
 
 
 /**
@@ -36,20 +32,6 @@ typedef void(^_CallBack)(NSArray *result);
  @return ScanViewController对象
  */
 - (instancetype)initWithQrType:(MMScanType)type onFinish:(void (^)(NSString *result, NSError *error))finish;
-
-
-/**
- 清空所有历史记录
- */
-- (void)clearAllRecords;
-
-
-/**
- 清空某一条记录
-
- @param index 需要删除的index
- */
-- (void)clearRecordIndex: (NSUInteger)index;
 
 /**
  识别二维码
@@ -101,4 +83,5 @@ typedef void(^_CallBack)(NSArray *result);
  @return UIImage图片对象
  */
 + (UIImage* )createBarCodeImageWithString:(NSString*)content QRSize:(CGSize)size QRColor:(UIColor*)qrColor bkColor:(UIColor*)bkColor;
+
 @end

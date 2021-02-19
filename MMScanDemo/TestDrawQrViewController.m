@@ -22,8 +22,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    
 }
 - (IBAction)createQrBtnClicked:(id)sender {
     
@@ -40,16 +38,22 @@
 
 //长按保存图片
 - (IBAction)tapImage:(id)sender {
-    
     if(_qrImageView.image) {
-        UIImageWriteToSavedPhotosAlbum(_qrImageView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), (__bridge void *)self);
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"保存图片" message:@"是否保存二维码图片到相册" preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIImageWriteToSavedPhotosAlbum(_qrImageView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), (__bridge void *)self);
+        }];
+        
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:NULL];
+        [alert addAction:ok];
+        [alert addAction:cancel];
+        [self presentViewController:alert animated:YES completion:NULL];
     } else {
         [self showInfo:@"请先生成二维码"];
     }
 }
 
-- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
-{
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
     NSLog(@"image = %@, error = %@, contextInfo = %@", image, error, contextInfo);
     if(error) {
         [self showInfo:[NSString stringWithFormat:@"error: %@",error]];
@@ -63,8 +67,7 @@
     [self showInfo:str andTitle:@"提示"];
 }
 
-- (void)showInfo:(NSString*)str andTitle:(NSString *)title
-{
+- (void)showInfo:(NSString*)str andTitle:(NSString *)title {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:str preferredStyle:UIAlertControllerStyleAlert];
     
     

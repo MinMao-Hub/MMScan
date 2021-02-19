@@ -18,6 +18,9 @@ typedef enum : NSUInteger {
 
 -(id)initWithFrame:(CGRect)frame style:(NSString *)style;
 
+//开始扫描动画
+- (void)startAnimating;
+//停止扫描动画
 - (void)stopAnimating;
 
 @property (nonatomic, assign) MMScanType scanType;

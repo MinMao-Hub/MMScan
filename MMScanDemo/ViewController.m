@@ -60,9 +60,7 @@
                 [self showInfo:result];
             }
         }];
-        [scanVc setHistoryCallBack:^(NSArray *result) {
-            NSLog(@"%@",result);
-        }];
+        
         [self.navigationController pushViewController:scanVc animated:YES];
     } else if (indexPath.row == 1) {
         MMScanViewController *scanVc = [[MMScanViewController alloc] initWithQrType:MMScanTypeQrCode onFinish:^(NSString *result, NSError *error) {
@@ -82,9 +80,6 @@
                 NSLog(@"扫描结果：%@",result);
                 [self showInfo:result];
             }
-        }];
-        [scanVc setHistoryCallBack:^(NSArray *result) {
-            NSLog(@"3%@",result);
         }];
         [self.navigationController pushViewController:scanVc animated:YES];
     } else if (indexPath.row == 3) {
