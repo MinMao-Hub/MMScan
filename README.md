@@ -40,6 +40,12 @@ Just clone and add the folder `MMScanner` to your project.
 
 ### Example
 
+* 2021.2.19 更新, 扫描区域改变动画，参考自CSDN大佬 [iOS 为CALayer添加可动画的属性](https://blog.csdn.net/Hello_Hwc/article/details/50522634)
+
+<div style="margin-top: 10px">
+	<img src="gifs/animate.gif" width="35%" style="margin-left:20px" />
+</div>
+
 
 
 <div style="padding: 20px">
@@ -49,11 +55,7 @@ Just clone and add the folder `MMScanner` to your project.
 	<img src="gifs/mmscan.gif" width="35%" style="margin-left:20px" />
 </div>
 
-* 2018.6.10 新增
 
-<div style="margin-top: 10px">
-	<img src="gifs/history.png" width="35%" style="margin-left:20px" />
-</div>
 
 
 
@@ -117,49 +119,17 @@ UIImage *image = [ScanViewController createBarCodeImageWithString:_linkTfd.text 
 
 ```
 
-#### 保留历史记录以及查看历史记录
-
-```
-//设置历史数据回调
-[scanVc setHistoryCallBack:^(NSArray *result) {
-    NSLog(@"%@",result);
-}];
-```
-
-设置该回调，即显示历史记录按钮【在导航条右边-> 可自定义该item】,点击历史按钮便会回调历史数据。
-
-##### 清除历史数据
-
-```
-/**
- 清空所有历史记录
- */
-- (void)clearAllRecords;
-
-
-/**
- 清空某一条记录
-
- @param index 需要删除的index
- */
-- (void)clearRecordIndex: (NSUInteger)index;
-```
-
-
 
 ### 更多
 
 更多自定义以及修改原有属性，[请看源码](https://github.com/MinMao-Hub/MMScan/tree/master/MMScanner)
 
-### Contribution
-
-You are welcome to fork and submit pull requests.
-
-### License
-
-MMScan is open-sourced software licensed under the MIT license.
-
 ### Update Log
+
+> *v0.0.8* [2021.2.19]
+
+* 扫描切换动画，用起来更加丝滑
+* 删除历史记录查看功能
 
 > *v0.0.7* [2018.6.11]
 
@@ -184,5 +154,15 @@ MMScan is open-sourced software licensed under the MIT license.
 
 
 <hr/>
+
+
+### Contribution
+
+You are welcome to fork and submit pull requests.
+
+### License
+
+MMScan is open-sourced software licensed under the MIT license.
+
 
 
