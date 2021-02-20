@@ -40,7 +40,7 @@ Just clone and add the folder `MMScanner` to your project.
 
 ### Example
 
-* 2021.2.19 更新, 扫描区域改变动画，参考自CSDN大佬 [iOS 为CALayer添加可动画的属性](https://blog.csdn.net/Hello_Hwc/article/details/50522634)
+* 2021.2.19 更新, 扫描区域改变动画，切换更加丝滑，参考自CSDN大佬 [iOS 为CALayer添加可动画的属性](https://blog.csdn.net/Hello_Hwc/article/details/50522634)
 
 <div style="margin-top: 10px">
 	<img src="gifs/animate.gif" width="35%" style="margin-left:20px" />
