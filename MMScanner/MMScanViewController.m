@@ -41,12 +41,13 @@ static NSString *kMMScanHistoryKey = @"kMMScanHistoryKey";
 /// 扫码完成回调
 @property (nonatomic, copy) void (^scanFinish)(NSString *, NSError *);
 
+
+@property (nonatomic, assign) BOOL delayQRAction;
+@property (nonatomic, assign) BOOL delayBarAction;
+
 @end
 
-@implementation MMScanViewController {
-    BOOL delayQRAction;
-    BOOL delayBarAction;
-}
+@implementation MMScanViewController
 
 #pragma mark - lifeCycle
 
@@ -95,8 +96,9 @@ static NSString *kMMScanHistoryKey = @"kMMScanHistoryKey";
 - (void)config {
     self.title = @"扫一扫";
     self.view.backgroundColor = [UIColor blackColor];
-    delayQRAction = NO;
-    delayBarAction = NO;
+    
+    _delayQRAction = NO;
+    _delayBarAction = NO;
 }
 
 /// 扫描设备 - 相机相关
@@ -275,34 +277,34 @@ static NSString *kMMScanHistoryKey = @"kMMScanHistoryKey";
 //修改扫码类型 【二维码  || 条形码】
 - (void)qrBtnClicked:(UIButton *)sender {
     if (sender.selected) return;
-    if (delayQRAction) return;
+    if (_delayQRAction) return;
     
     [sender setSelected:YES];
     [_scanTypeBarBtn setSelected:NO];
     [self changeScanCodeType:MMScanTypeQrCode];
     [self setNavItem:MMScanTypeQrCode];
-    delayQRAction = YES;
-    __weak typeof (self)weakSelf = self;
+
+    _delayQRAction = YES;
+    __weak typeof(self) weakSelf = self;
     [self performTaskWithTimeInterval:1.0f action:^{
-        __strong typeof(self)strongSelf = weakSelf;
-        strongSelf->delayQRAction = NO;
+        weakSelf.delayQRAction = NO;
     }];
 }
 
 - (void)barBtnClicked:(UIButton *)sender {
     if (sender.selected) return;
-    if (delayBarAction) return;
+    if (_delayBarAction) return;
     
     [sender setSelected:YES];
     [_scanTypeQrBtn setSelected:NO];
     [self.scanRectView stopAnimating];
     [self changeScanCodeType:MMScanTypeBarCode];
     [self setNavItem:MMScanTypeBarCode];
-    delayBarAction = YES;
-    __weak typeof (self)weakSelf = self;
+
+    _delayBarAction = YES;
+    __weak typeof(self) weakSelf = self;
     [self performTaskWithTimeInterval:1.0f action:^{
-        __strong typeof(self)strongSelf = weakSelf;
-        strongSelf->delayBarAction = NO;
+        weakSelf.delayBarAction = NO;
     }];
 }
 
@@ -316,7 +318,10 @@ static NSString *kMMScanHistoryKey = @"kMMScanHistoryKey";
 }
 
 - (NSBundle *)scanBundle {
-    return [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"resource" ofType: @"bundle"]];
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSURL *bundleURL = [bundle URLForResource:@"resource" withExtension:@"bundle"];
+    NSBundle *resourceBundle = [NSBundle bundleWithURL: bundleURL];
+    return resourceBundle;
 }
 
 #pragma mark - 修改扫码类型 【二维码  || 条形码】
@@ -338,23 +343,23 @@ static NSString *kMMScanHistoryKey = @"kMMScanHistoryKey";
     
     //设置扫描聚焦区域
     dispatch_async(dispatch_get_main_queue(), ^{
-        weakSelf.output.rectOfInterest = _scanRect;
+        weakSelf.output.rectOfInterest = self->_scanRect;
         [weakSelf.scanRectView setScanType: type];
-        _tipTitle.text = type == MMScanTypeQrCode ?
-                                    @"将取景框对准二维码,即可自动扫描" :
-                                    @"将取景框对准条码,即可自动扫描";
+        self->_tipTitle.text = type == MMScanTypeQrCode ?
+        @"将取景框对准二维码,即可自动扫描" :
+        @"将取景框对准条码,即可自动扫描";
         [weakSelf.session startRunning];
     });
     
     [UIView animateWithDuration:0.4 animations:^{
-        _tipTitle.center = CGPointMake(self.view.center.x, self.view.center.y + scanSize.height/2 + 25);
+        self->_tipTitle.center = CGPointMake(self.view.center.x, self.view.center.y + scanSize.height/2 + 25);
         
         CGFloat bottomPadding = kFlash_Y_PAD(120);
         if ([UIScreen mainScreen].bounds.size.height >= 812) {
             bottomPadding += 34;
         }
         
-        [_flashBtn setCenter:CGPointMake(self.view.center.x, type == MMScanTypeQrCode ? (self.view.center.y + kFlash_Y_PAD(70)) : CGRectGetMaxY(self.view.frame)- bottomPadding)];
+        [self->_flashBtn setCenter:CGPointMake(self.view.center.x, type == MMScanTypeQrCode ? (self.view.center.y + kFlash_Y_PAD(70)) : CGRectGetMaxY(self.view.frame)- bottomPadding)];
     }];
     
     //闪光灯会关闭、 切换按钮状态
@@ -484,7 +489,12 @@ static NSString *kMMScanHistoryKey = @"kMMScanHistoryKey";
     NSString *tipMessage = [NSString stringWithFormat:@"请到手机系统的\n【设置】->【隐私】->【%@】\n对\"%@\"开启%@的访问权限",typeStr,self.appName,typeStr];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"相机权限未开启" message:tipMessage preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"去设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:NULL];
+        if (@available(iOS 10.0, *)) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:NULL];
+        } else {
+            // Fallback on earlier versions
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+        }
     }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         [self.navigationController popViewControllerAnimated:YES];
@@ -658,3 +668,4 @@ static NSString *kMMScanHistoryKey = @"kMMScanHistoryKey";
 }
 
 @end
+

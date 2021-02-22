@@ -15,6 +15,15 @@
 
 `MMScan ` is an simple QRCode and barcode scanning tool,Contains a separate set of interfaces and a single call, as well as the generation of QRCode code and bar code, a line of code can run.
 
+### Case
+
+之前浏览AppStore，发现有好几款App使用了我这个轮子
+
+1. [二维码生成器](https://apps.apple.com/cn/app/%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%94%9F%E6%88%90%E5%99%A8-%E6%89%AB%E4%B8%80%E6%89%AB-%E4%B8%93%E4%B8%9A%E6%89%AB%E6%8F%8F%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%85%A8%E8%83%BD%E7%8E%8B/id1500180351#?platform=iphone)
+2. [扫一扫](https://apps.apple.com/cn/app/%E6%89%AB%E4%B8%80%E6%89%AB-%E4%B8%93%E4%B8%9A%E4%BA%8C%E7%BB%B4%E7%A0%81%E6%9D%A1%E5%BD%A2%E7%A0%81%E6%89%AB%E6%8F%8F%E5%92%8C%E7%94%9F%E6%88%90%E5%B7%A5%E5%85%B7/id1412695729)
+3. [条码生成器](https://apps.apple.com/cn/app/%E6%9D%A1%E5%BD%A2%E7%A0%81%E7%94%9F%E6%88%90%E5%99%A8-%E6%89%AB%E6%8F%8F%E5%99%A8/id1547930886)
+
+
 ### Rquirements
 
 * iOS 8.0+
