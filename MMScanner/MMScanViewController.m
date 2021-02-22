@@ -318,7 +318,12 @@ static NSString *kMMScanHistoryKey = @"kMMScanHistoryKey";
 }
 
 - (NSBundle *)scanBundle {
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    
+    NSBundle *bundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"resource" ofType: @"bundle"]];
+    if (bundle != nil) {
+        return bundle;
+    }
+    bundle = [NSBundle bundleForClass:[self class]];
     NSURL *bundleURL = [bundle URLForResource:@"resource" withExtension:@"bundle"];
     NSBundle *resourceBundle = [NSBundle bundleWithURL: bundleURL];
     return resourceBundle;
