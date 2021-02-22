@@ -282,8 +282,10 @@ static NSString *kMMScanHistoryKey = @"kMMScanHistoryKey";
     [self changeScanCodeType:MMScanTypeQrCode];
     [self setNavItem:MMScanTypeQrCode];
     delayQRAction = YES;
+    __weak typeof (self)weakSelf = self;
     [self performTaskWithTimeInterval:1.0f action:^{
-        delayQRAction = NO;
+        __strong typeof(self)strongSelf = weakSelf;
+        strongSelf->delayQRAction = NO;
     }];
 }
 
@@ -297,8 +299,10 @@ static NSString *kMMScanHistoryKey = @"kMMScanHistoryKey";
     [self changeScanCodeType:MMScanTypeBarCode];
     [self setNavItem:MMScanTypeBarCode];
     delayBarAction = YES;
+    __weak typeof (self)weakSelf = self;
     [self performTaskWithTimeInterval:1.0f action:^{
-        delayBarAction = NO;
+        __strong typeof(self)strongSelf = weakSelf;
+        strongSelf->delayBarAction = NO;
     }];
 }
 
