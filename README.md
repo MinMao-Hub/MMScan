@@ -138,7 +138,7 @@ UIImage *image = [ScanViewController createBarCodeImageWithString:_linkTfd.text 
 
 > *v0.0.9* [2021.2.22]
 
-* 修复使用Cocoapods时bundle找不到问题
+* 修复使用Cocoapods - use_frameworks! 时bundle找不到问题
 
 > *v0.0.8* [2021.2.19]
 
